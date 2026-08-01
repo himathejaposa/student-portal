@@ -84,14 +84,13 @@ WSGI_APPLICATION = 'student_portal.wsgi.application'
 DATABASES = {
     'default': {
        'ENGINE':'django.db.backends.mysql',
-       'NAME':'student_portal',
-       'USER':'root',
+       'NAME': config('DB_NAME', default='student_portal'),
+       'USER': config('DB_USER', default='root'),
        'PASSWORD': config('DB_PASSWORD'),
-       'HOST':'localhost',
-       'PORT':'3306',
+       'HOST': config('DB_HOST', default='localhost'),
+       'PORT': config('DB_PORT', default='3306'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
