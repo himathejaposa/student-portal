@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Courses{% endblock %}
+
+{% block content %}
+    <h1>Add a Course</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Course</button>
+    </form>
+
+    <h2>All Courses</h2>
+    <ul>
+        {% for course in courses %}
+            <li>{{ course.course_code }} - {{ course.course_name }} ({{ course.credits }} credits) - {{ course.instructor }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

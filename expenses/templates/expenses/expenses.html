@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Expenses{% endblock %}
+
+{% block content %}
+    <h1>Add an Expense</h1>
+    <h2>Total Spent: ₹{{ total_spent }}</h2>
+    {% if chart_url %}
+    <h2>Spending Breakdown</h2>
+    <img src="data:image/png;base64,{{ chart_url }}" alt="Expense Chart">
+    {% endif %}
+
+    {% if insight %}
+    <h3>AI Insight</h3>
+    <p>{{ insight }}</p>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Expense</button>
+    </form>
+    <h2>Your Expenses</h2>
+    <ul>
+        {% for expense in expenses %}
+            <li>{{ expense.date }} - {{ expense.category }} - ₹{{ expense.amount }} - {{ expense.description }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

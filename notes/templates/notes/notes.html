@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Notes & Doubts{% endblock %}
+
+{% block content %}
+    <h1>Post a Note or Doubt</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Post</button>
+    </form>
+
+    <h2>All Notes & Doubts</h2>
+    <ul>
+        {% for note in notes %}
+            <li>
+                <strong>{{ note.title }}</strong>
+                {% if note.is_doubt %}(Doubt){% endif %}
+                — by {{ note.student.username }} on {{ note.course.course_code }}
+                <p>{{ note.content }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
