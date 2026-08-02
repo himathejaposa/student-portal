@@ -1,7 +1,9 @@
 {
+  "id": "/dashboard/",
   "name": "Student Portal",
   "short_name": "StudentPortal",
   "start_url": "/dashboard/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#2c3e50",
   "theme_color": "#2c3e50",
