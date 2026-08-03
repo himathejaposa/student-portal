@@ -3,27 +3,54 @@
 <html>
 <head>
     <title>{% block title %}Student Portal{% endblock %}</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="{% static 'style.css' %}">
-<link rel="manifest" href="{% static 'manifest.json' %}">
-<meta name="theme-color" content="#2c3e50">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+    <meta name="theme-color" content="#2c3e50">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <nav>
-        <a href="{% url 'dashboard' %}">Dashboard</a> |
-        <a href="{% url 'course_list' %}">Courses</a> |
-        <a href="{% url 'mark_attendance' %}">Attendance</a> |
-        <a href="{% url 'note_list' %}">Notes & Doubts</a> |
-        <a href="{% url 'expense_list' %}">Expenses</a>
-    </nav>
-    <hr>
+    <div class="topbar">
+        <button id="menuBtn">☰</button>
+        <span class="app-title">Student Portal</span>
+    </div>
 
-    {% block content %}
-    {% endblock %}
+    <div id="sideMenu" class="side-menu">
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="{% url 'course_list' %}">Courses</a>
+        <a href="{% url 'mark_attendance' %}">Attendance</a>
+        <a href="{% url 'note_list' %}">Notes & Doubts</a>
+        <a href="{% url 'expense_list' %}">Expenses</a>
+    </div>
+
+    <div id="overlay" class="overlay"></div>
+
+    <div class="main-content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const sideMenu = document.getElementById('sideMenu');
+        const overlay = document.getElementById('overlay');
+
+        menuBtn.addEventListener('click', () => {
+            sideMenu.classList.add('open');
+            overlay.classList.add('show');
+        });
+
+        overlay.addEventListener('click', () => {
+            sideMenu.classList.remove('open');
+            overlay.classList.remove('show');
+        });
+    </script>
+
+    {% if user.is_authenticated %}
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register("{% static 'service-worker.js' %}");
+        }
+    </script>
+    {% endif %}
 </body>
 </html>
-<script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register("{% static 'service-worker.js' %}");
-    }
-</script>
